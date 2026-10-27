@@ -25,7 +25,7 @@ jobs:
 
       - name: Get GKE Credentials
         run: |
-          gcloud container clusters get-credentials autopiolet-cluster1 \
+          gcloud container clusters get-credentials autopiolet-cluster-1 \
             --region us-central1
 
       - name: Verify Cluster Access
