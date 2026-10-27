@@ -1,4 +1,4 @@
-name: GCP Auth Test
+name: GKE Test
 
 on:
   workflow_dispatch:
@@ -8,12 +8,11 @@ permissions:
   id-token: write
 
 jobs:
-  auth:
+  test-gke:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -24,7 +23,15 @@ jobs:
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Verify Authentication
+      - name: Get GKE Credentials
         run: |
-          gcloud auth list
-          gcloud projects list
+          gcloud container clusters get-credentials autopiolet-cluster1 \
+            --region us-central1
+
+      - name: Verify Cluster Access
+        run: |
+          kubectl get nodes
+
+      - name: Verify Pods
+        run: |
+          kubectl get pods -A
