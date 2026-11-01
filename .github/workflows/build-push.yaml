@@ -35,7 +35,7 @@ jobs:
 
       - name: Build Image
         run: |
-          docker build -t employee-k8s .
+          docker build -t employee-k8s ./firstgcp
 
       - name: Tag Image
         run: |
